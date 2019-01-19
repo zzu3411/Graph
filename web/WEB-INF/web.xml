@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>CollectServlet</servlet-name>
+        <servlet-class>zzu.web.servlet.CollectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CollectServlet</servlet-name>
+        <url-pattern>/CollectServlet</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>CurriculumServlet</servlet-name>
+        <servlet-class>zzu.web.servlet.CurriculumServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CurriculumServlet</servlet-name>
+        <url-pattern>/CurriculumServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>zzu.web.servlet.StudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentServlet</servlet-name>
+        <url-pattern>/StudentServlet</url-pattern>
+    </servlet-mapping>
+
+
+<!--
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>zzu.web.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/* </url-pattern>
+    </filter-mapping>
+-->
+
+
+
+
+</web-app>
