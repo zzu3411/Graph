@@ -26,6 +26,9 @@ public class CollectServlet extends BaseServlet {
         Student loginStudent = (Student) request.getSession().getAttribute("loginStudent");
         System.out.println("当前用户session：" + loginStudent.toString());
 
+        //知识点数据
+        String graph = request.getParameter("graph");
+
         //获取前端传递过来的json 进行处理
         String json = request.getParameter("json");
 

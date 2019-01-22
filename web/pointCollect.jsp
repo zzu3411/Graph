@@ -11,8 +11,8 @@
 <html>
 <head>
     <title>采集页面</title>
-    <script src="/JS/go.js"></script>
-    <script src="/JS/jquery-1.12.2.min.js"></script>
+    <script src="JS/go.js"></script>
+    <script src="JS/jquery-1.12.2.min.js"></script>
 </head>
     <body onload="init()">
 
@@ -27,14 +27,38 @@
     </c:if>
 
 
-        <form class="form-horizontal"<%-- action="${pageContext.request.contextPath}/StudentServlet?method=studentLogin"--%>
-          method="post">
+        <form class="form-horizontal" action="${pageContext.request.contextPath}/CollectServlet?method=collectData" method="post">
             <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 800px"></div>
             <div>
                 <button id="SaveButton" onclick="save()">保存</button>
                 <%--<button onclick="load()">load</button> --%>
             </div>
-            <textarea id="mySavedModel" style="width:100%;height:300px"></textarea>
+            <textarea id="graph" name="graph" style="width:100%;height:300px">
+                <%--{ "class": "go.GraphLinksModel",
+                  "nodeKeyProperty": "id",
+                  "nodeDataArray": [
+                    { "id": 0, "loc": "120 120", "text": "Initial" },
+                    { "id": 1, "loc": "330 120", "text": "First down" },
+                    { "id": 2, "loc": "226 376", "text": "First up" },
+                    { "id": 3, "loc": "60 276", "text": "Second down" },
+                    { "id": 4, "loc": "226 226", "text": "Wait" }
+                  ],
+                  "linkDataArray": [
+                    { "from": 0, "to": 0, "text": "up or timer", "curviness": -20 },
+                    { "from": 0, "to": 1, "text": "down", "curviness": 20 },
+                    { "from": 1, "to": 0, "text": "up (moved)\nPOST", "curviness": 20 },
+                    { "from": 1, "to": 1, "text": "down", "curviness": -20 },
+                    { "from": 1, "to": 2, "text": "up (no move)" },
+                    { "from": 1, "to": 4, "text": "timer" },
+                    { "from": 2, "to": 0, "text": "timer\nPOST" },
+                    { "from": 2, "to": 3, "text": "down" },
+                    { "from": 3, "to": 0, "text": "up\nPOST\n(dblclick\nif no move)" },
+                    { "from": 3, "to": 3, "text": "down or timer", "curviness": 20 },
+                    { "from": 4, "to": 0, "text": "up\nPOST" },
+                    { "from": 4, "to": 4, "text": "down" }
+                  ]
+                }--%>
+            </textarea>
 
             <%--知识点名称 ：<input type="text" name="knowledgePointName" id="knowledgePointName"> <br/>
             理解 ：<input type="text" name="knowledgePointConcept" id="knowledgePointConcept"> <br/>
@@ -55,11 +79,9 @@
     </body>
 
 
-<script src="js/jquery-1.11.3.min.js"></script>
-
 <script type="text/javascript">
     /*$(function () {
-        var url = "${pageContext.request.contextPath}/CategoryServlet";
+        var url = "/CategoryServlet";
         var obj = {"method": "findAllCategory"};
         $.post(url, obj, function (data) {
             $.each(data, function (i, objs) {
@@ -127,7 +149,7 @@
                         $(go.TextBlock, textStyle(),  // the name
                             {
                                 row: 0, column: 0, columnSpan: 5,
-                                font: "12pt Segoe UI,sans-serif",
+                                font: "9pt Segoe UI,sans-serif",
                                 editable: true, isMultiline: false,
                                 minSize: new go.Size(10, 16)
                             },
@@ -139,7 +161,7 @@
                         $(go.TextBlock, textStyle(),  // the concept
                             {
                                 row: 3, column: 0, columnSpan: 5,
-                                font: "italic 9pt sans-serif",
+                                font: "9pt utf-8",
                                 wrap: go.TextBlock.WrapFit,
                                 editable: true,  // by default newlines are allowed
                                 minSize: new go.Size(10, 14)
@@ -152,7 +174,7 @@
                         $(go.TextBlock, textStyle(),  // the weight
                             {
                                 row: 0, column: 0, columnSpan: 5,
-                                font: "12pt Segoe UI,sans-serif",
+                                font: "9pt Segoe UI,sans-serif",
                                 editable: true, isMultiline: false,
                                 minSize: new go.Size(10, 16)
                             },
@@ -210,7 +232,7 @@
         }
 
         function textStyle() {
-            return { font: "9pt  Segoe UI,sans-serif", stroke: "black", margin: 2 };
+            return { font: "12pt Segoe UI,sans-serif", stroke: "black", margin: 2 };
         }
 
         // replace the default Link template in the linkTemplateMap
@@ -247,18 +269,19 @@
                         new go.Binding("text", "relate").makeTwoWay())
                 )
             );
-        // read in the JSON data from the "mySavedModel" element
+        // read in the JSON data from the "graph" element
         load();
     }
 
     // Show the diagram's model in JSON format
     function save() {
-        document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-        console.log(document.getElementById("mySavedModel").value);
+        document.getElementById("graph").value = myDiagram.model.toJson();
+        console.log(document.getElementById("graph").value);
+        /*person = {username: "小李", password: "123"};
         $.ajax({
             type: "POST",
-            url: "${pageContext.request.contextPath}/CollectServlet?method=collectData",
-            data: 123,
+            url: "/CollectServlet?method=collectData",
+            data: person,
             dataType:"json",
             success: function(data) {
                 console.log(data)
@@ -266,11 +289,11 @@
             error: function(data) {
                 console.log(data)
             }
-        });
+        });*/
     }
 
     function load() {
-        myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+        myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
     }
 </script>
 
