@@ -11,8 +11,8 @@
 <html>
 <head>
     <title>采集页面</title>
-    <script src="/JS/go.js"></script>
-    <script src="/JS/jquery-1.12.2.min.js"></script>
+    <script src="JS/go.js"></script>
+    <script src="JS/jquery-1.12.2.min.js"></script>
 </head>
     <body onload="init()">
 
@@ -55,7 +55,6 @@
     </body>
 
 
-<script src="js/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript">
     /*$(function () {
@@ -135,7 +134,7 @@
                     ),
                     $(go.Panel, "Horizontal",
                         $(go.TextBlock, "概述: ", textStyle(),
-                            { row: 1, column: 10 }),
+                            { row: 1, column: 0xa0 }),
                         $(go.TextBlock, textStyle(),  // the concept
                             {
                                 row: 3, column: 0, columnSpan: 5,

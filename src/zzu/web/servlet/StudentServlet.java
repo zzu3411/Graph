@@ -15,7 +15,7 @@ public class StudentServlet extends BaseServlet {
 
     public  String studentLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
-        Integer studentId = Integer.parseInt(request.getParameter("studentId"));
+        Integer studentId = Integer.parseInt(request.getParameter("studentId").trim());
         String passWord = request.getParameter("passWord");
         System.out.println(studentId + "  " + passWord);
         StudentService studentService = new StudentServiceImp();

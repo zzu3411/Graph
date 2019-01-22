@@ -1,6 +1,7 @@
 package zzu.utils;
 
 import net.sf.json.JSONObject;
+import zzu.test.StaticData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,27 @@ import java.util.Map;
 import java.util.Set;
 
 public class JsonUtils {
-    public  Map<String, Map> main(String json) {
+
+/*
+    public static void main(String[] args) {
+        String json = StaticData.json;
+        JsonUtils jsonUtils = new JsonUtils();
+        Map<String,Map> test =jsonUtils.jsonResolve(json);
+        Map<Integer,Map> nodeMap = test.get("nodeMap");
+        Set<Integer> set = nodeMap.keySet();
+        for (Integer s:set){
+            System.out.println("nodeName: " + nodeMap.get(s));
+            String nodeName =  (String) nodeMap.get(s).get("nodeName");
+            String nodeConcept = (String) nodeMap.get(s).get("nodeConcept");
+            String nodeWeight = (String) nodeMap.get(s).get("nodeWeight");
+            System.out.println("nodeName: " + nodeName + "  nodeConcept: " + nodeConcept +"  nodeWeight: "  +nodeWeight);
+        }
+
+
+    }*/
+
+
+    public  static Map<String, Map> jsonResolve(String json) {
         //String json = StaticData.jsonData;
 
         JSONObject jsonObject = JSONObject.fromObject(json);
@@ -16,17 +37,17 @@ public class JsonUtils {
 
 
 
-//        处理节点 id,"text(知识点名称)","loc"   nodeMap(id,"(text)知识点name")
+//        处理节点 key,"name(知识点名称)",  Integer,Map
         List<Object> nodeList = (List<Object>) map.get("nodeDataArray");
         Map<Integer,Map> nodeMap = new HashMap();
         for (Object node:nodeList){
             JSONObject jsonObject1 = JSONObject.fromObject(node);
             Map<String, Object> map1 = (Map<String, Object>) JSONObject.toBean(jsonObject1, Map.class);
 
-            Integer id = (Integer) map1.get("id");
-            String nodeName =  ((String)map1.get("text")).trim() ;
-            String nodeWeight = ((String)map1.get("nodeWeight")).trim();
-            String nodeConcept =  ((String)map1.get("nodeConcept")).trim();
+            Integer id = (Integer) map1.get("key");
+            String nodeName =  ((String)map1.get("name")).trim() ;
+            String nodeWeight = ((String)map1.get("weight")).trim();
+            String nodeConcept =  ((String)map1.get("concept")).trim();
 
             Map<String , String> nodeValues = new HashMap<>();
             nodeValues.put("nodeName", nodeName);
@@ -51,8 +72,9 @@ public class JsonUtils {
             Integer j = Integer.parseInt (  (map1.get("to")).toString().trim()  );
             fromTo[1] =  (String)  nodeMap.get(j).get("nodeName") ;
 //            Integer weight = Integer.parseInt (  (map1.get("text")).toString().trim()  )  ;
-            Double weight = 0.5;
-            lineMap.put(fromTo, weight);
+
+            Double relate = Double.parseDouble ( ( map1.get("relate")).toString().trim() );
+            lineMap.put(fromTo, relate);
         }
 
         Set<String[]> set = lineMap.keySet();
@@ -70,4 +92,7 @@ public class JsonUtils {
 
         return returnMap;
     }
+
+
+
 }
