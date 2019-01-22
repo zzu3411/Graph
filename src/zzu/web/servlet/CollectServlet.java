@@ -42,6 +42,7 @@ public class CollectServlet extends BaseServlet {
 
         //知识点数据
         String graph = request.getParameter("graph");
+        System.out.println("Graph: " + graph);
 
         //获取前端传递过来的json 进行处理
         //String json = request.getParameter("json");
