@@ -2,10 +2,11 @@ package zzu.service;
 
 import zzu.dao.CollectDao;
 import zzu.dao.CollectDaoImp;
+import zzu.dao.StuCurDao;
+import zzu.dao.StuCurDaoImp;
+import zzu.domin.Curriculum;
 
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Map;
 
 public class CollectServiceImp implements CollectService {
     @Override
@@ -34,5 +35,11 @@ public class CollectServiceImp implements CollectService {
     public void updateStuCurMemo(Integer loginStudentID, Integer curriculumId, String memo) throws SQLException {
         CollectDao collectDao = new CollectDaoImp();
         collectDao.updateStuCurMemo(loginStudentID, curriculumId, memo);
+    }
+
+    @Override
+    public Curriculum findMemo(Integer loginStudentID, Integer curriculumId) throws SQLException {
+        StuCurDao stuCurDao = new StuCurDaoImp();
+        return stuCurDao.findMemo(loginStudentID, curriculumId);
     }
 }

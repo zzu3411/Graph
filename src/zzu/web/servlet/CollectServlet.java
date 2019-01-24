@@ -4,12 +4,14 @@ import com.sun.deploy.net.HttpRequest;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import zzu.dao.CollectDaoImp;
+import zzu.domin.Curriculum;
 import zzu.domin.Student;
 import zzu.service.*;
 import zzu.test.StaticData;
 import zzu.utils.JsonUtils;
 import zzu.web.base.BaseServlet;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +72,17 @@ public class CollectServlet extends BaseServlet {
         return "/pointCollect.jsp";
     }
 
+    public void findMemo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        Integer curId = Integer.valueOf(request.getParameter("curId"));
+        Student loginStudent = (Student) request.getSession().getAttribute("loginStudent");
+        Integer StuID = loginStudent.getID();
 
+        CollectService collectService = new CollectServiceImp();
+        Curriculum cur= collectService.findMemo(StuID, curId);
+        PrintWriter out = response.getWriter();
+        out.print(cur.getMemo());
+
+    }
 
     public void saveLine(Map<String[],Double> nodeMap,Integer loginStudentID,Integer curriculumId) throws SQLException {
          Set<String[]> set = nodeMap.keySet();
