@@ -73,12 +73,14 @@ public class CollectServlet extends BaseServlet {
     }
 
     public void findMemo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        request.setCharacterEncoding("UTF-8");
         Integer curId = Integer.valueOf(request.getParameter("curId"));
         Student loginStudent = (Student) request.getSession().getAttribute("loginStudent");
         Integer StuID = loginStudent.getID();
 
         CollectService collectService = new CollectServiceImp();
         Curriculum cur= collectService.findMemo(StuID, curId);
+        response.setContentType("application/json; charset=utf-8");
         PrintWriter out = response.getWriter();
         out.print(cur.getMemo());
 
