@@ -28,50 +28,24 @@
 
 
         <form class="form-horizontal" action="${pageContext.request.contextPath}/CollectServlet?method=collectData" method="post">
-            <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 800px"></div>
-            <div>
-                <button id="SaveButton" onclick="save()">保存</button>
-                <%--<button onclick="load()">load</button> --%>
+            <div id="main" style="width: 100%">
+                <div id="left" style="width: 20%; float: left">
+                    <c:forEach items="${StuCur}" var="StuCur" varStatus="id">
+                        <li><a class="chooseCur" onclick='showGraph(${StuCur.ID}, ${StuCur.memo})' <%--href="${pageContext.request.contextPath}/CollectServlet?method=showCurGraph&memo=${StuCur.memo}"--%>>${StuCur.curriculumName}</a></li>
+                    </c:forEach>
+                </div>
+                <div id="right" style="width: 80%; float: right">
+                    <div id="myDiagramDiv" style="border: solid 1px black; width: 80%; height: 800px"></div>
+                    <div>
+                        <button id="SaveButton" onclick="save()">保存</button>
+                        <a onclick="load()">load</a>
+                    </div>
+                    <textarea id="graph" name="graph" style="width:100%; display: none">
+                        ${memo}
+                    </textarea>
+                    <input id="curID" name="curID" style="display: none"/>
+                </div>
             </div>
-            <textarea id="graph" name="graph" style="width:100%;height:300px">
-                <%--{ "class": "go.GraphLinksModel",
-                  "nodeKeyProperty": "id",
-                  "nodeDataArray": [
-                    { "id": 0, "loc": "120 120", "text": "Initial" },
-                    { "id": 1, "loc": "330 120", "text": "First down" },
-                    { "id": 2, "loc": "226 376", "text": "First up" },
-                    { "id": 3, "loc": "60 276", "text": "Second down" },
-                    { "id": 4, "loc": "226 226", "text": "Wait" }
-                  ],
-                  "linkDataArray": [
-                    { "from": 0, "to": 0, "text": "up or timer", "curviness": -20 },
-                    { "from": 0, "to": 1, "text": "down", "curviness": 20 },
-                    { "from": 1, "to": 0, "text": "up (moved)\nPOST", "curviness": 20 },
-                    { "from": 1, "to": 1, "text": "down", "curviness": -20 },
-                    { "from": 1, "to": 2, "text": "up (no move)" },
-                    { "from": 1, "to": 4, "text": "timer" },
-                    { "from": 2, "to": 0, "text": "timer\nPOST" },
-                    { "from": 2, "to": 3, "text": "down" },
-                    { "from": 3, "to": 0, "text": "up\nPOST\n(dblclick\nif no move)" },
-                    { "from": 3, "to": 3, "text": "down or timer", "curviness": 20 },
-                    { "from": 4, "to": 0, "text": "up\nPOST" },
-                    { "from": 4, "to": 4, "text": "down" }
-                  ]
-                }--%>
-            </textarea>
-
-            <%--知识点名称 ：<input type="text" name="knowledgePointName" id="knowledgePointName"> <br/>
-            理解 ：<input type="text" name="knowledgePointConcept" id="knowledgePointConcept"> <br/>
-            权重 ：<input type="text" name="knowledgePointLinkWeight" id="knowledgePointLinkWeight"> <br/>
-
-            <li><a href="${pageContext.request.contextPath}/CurriculumServlet?method=findAllCurriculum">查询课程 服务端输出信息</a></li>
-            <br/>
-
-            <li><a href="${pageContext.request.contextPath}/CollectServlet?method=collectData">服务端查看用户session</a></li>
-            <br/>
-
-            <input type="checkbox" name="" id="">--%>
-
 
         </form>
 
@@ -104,7 +78,7 @@
                     "clickCreatingTool.archetypeNodeData": {
                         name: "(知识点)",
                         concept: "(概述)",
-                        weight:"(权重)"
+                        weight:"1"
                         /*title: "",*/
                     },
                     // enable undo & redo
@@ -276,25 +250,19 @@
     // Show the diagram's model in JSON format
     function save() {
         document.getElementById("graph").value = myDiagram.model.toJson();
-        console.log(document.getElementById("graph").value);
-        /*person = {username: "小李", password: "123"};
-        $.ajax({
-            type: "POST",
-            url: "/CollectServlet?method=collectData",
-            data: person,
-            dataType:"json",
-            success: function(data) {
-                console.log(data)
-            },
-            error: function(data) {
-                console.log(data)
-            }
-        });*/
     }
 
     function load() {
         myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
     }
+    function load() {
+        myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
+    }
+    function showGraph(curID, memo) {
+        myDiagram.model = go.Model.fromJson(memo);
+        document.getElementById("curID").value = curID;
+    }
+
 </script>
 
 </html>

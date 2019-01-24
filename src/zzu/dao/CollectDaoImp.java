@@ -33,4 +33,12 @@ public class CollectDaoImp implements CollectDao {
         String sql = "DELETE FROM kg_classinnerlink WHERE studentId = ?";
         queryRunner.update(sql,loginStudentID);
     }
+
+    @Override
+    public void updateStuCurMemo(Integer loginStudentID, Integer curriculumId , String memo) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+        String sql = "UPDATE kg_studentcurriculum SET memo = ? where studentId=? AND curriculumId=? ";
+        queryRunner.update(sql,memo,loginStudentID,curriculumId);
+
+    }
 }

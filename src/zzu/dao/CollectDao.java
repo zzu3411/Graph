@@ -12,4 +12,6 @@ public interface CollectDao {
     void cleanNode(Integer loginStudentID) throws SQLException;
     //清理知识点关联表
     void cleanLine(Integer loginStudentID) throws SQLException;
+
+    void updateStuCurMemo(Integer loginStudentID, Integer curriculumId, String memo) throws SQLException;
 }

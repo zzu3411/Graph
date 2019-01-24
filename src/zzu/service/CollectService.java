@@ -10,4 +10,6 @@ public interface CollectService  {
 
     void clean(Integer loginStudentID) throws SQLException;
 
+    void updateStuCurMemo(Integer loginStudentID, Integer curriculumId ,String memo) throws SQLException;
+
 }
