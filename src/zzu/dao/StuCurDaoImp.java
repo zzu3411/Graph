@@ -19,4 +19,13 @@ public class StuCurDaoImp implements StuCurDao{
 
         return queryRunner.query(sql ,new BeanListHandler<Curriculum>(Curriculum.class),studentId);
     }
+
+    @Override
+    public Curriculum findMemo(Integer studentId, Integer curriculumId) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+
+        String sql = "select * from kg_studentcurriculum where studentId = ?  and curriculumId = ?";
+
+        return queryRunner.query(sql ,new BeanHandler<Curriculum>(Curriculum.class),studentId,curriculumId);
+    }
 }

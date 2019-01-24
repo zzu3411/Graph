@@ -258,9 +258,23 @@
     function load() {
         myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
     }
-    function showGraph(curID, memo) {
-        myDiagram.model = go.Model.fromJson(memo);
-        document.getElementById("curID").value = curID;
+    function showGraph(curId) {
+        //init();
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/CollectServlet?method=findMemo",
+            data: { curId:curId },
+            dataType:"json",
+            success: function(data) {
+                if(data != null){
+                    myDiagram.model = go.Model.fromJson(data);
+                }else myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
+                    "copiesKey": false,
+                    "nodeDataArray": [  ],
+                    "linkDataArray": [  ]});
+            }
+        });
+        document.getElementById("curID").value = curId;
     }
 
 </script>

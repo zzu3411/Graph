@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StuCurDao {
     List<Curriculum> findStuCur(Integer studentId) throws SQLException;
+
+    Curriculum findMemo(Integer loginStudentID, Integer curriculumId) throws SQLException;
 }

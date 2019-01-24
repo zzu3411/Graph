@@ -1,7 +1,8 @@
 package zzu.service;
 
+import zzu.domin.Curriculum;
+
 import java.sql.SQLException;
-import java.util.Map;
 
 public interface CollectService  {
     void saveNode(String nodeName, String nodeConcept,Double nodeWeight, Integer loginStudentID, Integer curriculumId) throws SQLException;
@@ -12,4 +13,5 @@ public interface CollectService  {
 
     void updateStuCurMemo(Integer loginStudentID, Integer curriculumId ,String memo) throws SQLException;
 
+    Curriculum findMemo(Integer loginStudentID, Integer curriculumId) throws SQLException;
 }
