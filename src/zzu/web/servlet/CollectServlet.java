@@ -5,8 +5,7 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import zzu.dao.CollectDaoImp;
 import zzu.domin.Student;
-import zzu.service.CollectService;
-import zzu.service.CollectServiceImp;
+import zzu.service.*;
 import zzu.test.StaticData;
 import zzu.utils.JsonUtils;
 import zzu.web.base.BaseServlet;
@@ -24,32 +23,40 @@ import java.util.Map;
 import java.util.Set;
 
 @WebServlet(name = "CollectServlet")
+
 public class CollectServlet extends BaseServlet {
 
     //解析前端返回的json 存储知识点与知识点间的联系
-    public  String collectData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    public String collectData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
         Student loginStudent = (Student) request.getSession().getAttribute("loginStudent");
         System.out.println("当前用户session：" + loginStudent.toString());
         Integer loginStudentID = loginStudent.getID();
-        Integer curriculumId = 18;
+        System.out.println(request.getParameter("curID"));
+        Integer curriculumId = Integer.valueOf(request.getParameter("curID"));
 
         //每次提交都删除之前数据重新保存
         CollectService collectService = new CollectServiceImp();
         collectService.clean(loginStudentID);
 
 
-
         //知识点数据
+        request.setCharacterEncoding("utf-8");
         String graph = request.getParameter("graph");
-        System.out.println("Graph: " + graph);
+        String graphStr=new String(graph.trim().getBytes("ISO-8859-1"), "UTF-8");
+        System.out.println("Graph: " + graphStr);
+
+        collectService = new CollectServiceImp();
+        collectService.updateStuCurMemo(loginStudentID, curriculumId , graphStr);
 
         //获取前端传递过来的json 进行处理
         //String json = request.getParameter("json");
 
         //测试使用
-        String json = StaticData.json;
-        Map<String,Map> test =JsonUtils.jsonResolve(json);
+        /*String json = StaticData.json;*/
+//        String json = graphStr;
+
+        Map<String,Map> test =JsonUtils.jsonResolve(graphStr);
 
         //存储知识点
         Map<Integer,Map> nodeMap = test.get("nodeMap");
@@ -61,6 +68,8 @@ public class CollectServlet extends BaseServlet {
 
         return "/pointCollect.jsp";
     }
+
+
 
     public void saveLine(Map<String[],Double> nodeMap,Integer loginStudentID,Integer curriculumId) throws SQLException {
          Set<String[]> set = nodeMap.keySet();

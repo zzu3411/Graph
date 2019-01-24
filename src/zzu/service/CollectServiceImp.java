@@ -29,4 +29,10 @@ public class CollectServiceImp implements CollectService {
         collectDao.cleanLine(loginStudentID);
 
     }
+
+    @Override
+    public void updateStuCurMemo(Integer loginStudentID, Integer curriculumId, String memo) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        collectDao.updateStuCurMemo(loginStudentID, curriculumId, memo);
+    }
 }
