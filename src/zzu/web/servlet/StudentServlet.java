@@ -3,23 +3,23 @@ package zzu.web.servlet;
 import zzu.domin.Student;
 import zzu.service.StudentService;
 import zzu.service.StudentServiceImp;
-import zzu.test.insertData;
-import zzu.test.testChar;
 import zzu.web.base.BaseServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
+import zzu.domin.Curriculum;
+import zzu.service.CurriculumService;
+import zzu.service.CurriculumServiceImp;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StudentServlet extends BaseServlet {
 
     public  String studentLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-
-//        insertData.insertStuCur();
-//        testChar.testCharCH();
 
         Integer studentId = Integer.parseInt(request.getParameter("studentId").trim());
         String passWord = request.getParameter("passWord");
@@ -44,9 +44,13 @@ public class StudentServlet extends BaseServlet {
 
             }
 
-            System.out.println(student.toString());
+            CurriculumService curSer = new CurriculumServiceImp();
+            List<Curriculum> currList= curSer.findStuCur(studentId);
+
+            request.getSession().setAttribute("StuCur", currList);
             request.getSession().setAttribute("loginStudent", student);
             return "/pointCollect.jsp";
+
 
         }else{
             System.out.println("查询为空！");
