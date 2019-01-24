@@ -2,7 +2,7 @@
 	<!-- 默认配置，如果没有指定则使用这个配置 -->
 	<default-config>
 		<property name="driverClass">com.mysql.jdbc.Driver</property>
-		<property name="jdbcUrl">jdbc:mysql://222.22.65.186/Graph</property>
+		<property name="jdbcUrl">jdbc:mysql://222.22.65.186/Graph?useUnicode=true&amp;characterEncoding=utf-8 </property>
 		<property name="user">root</property>
 		<property name="password">rootroot</property>
 		<property name="checkoutTimeout">30000</property>
