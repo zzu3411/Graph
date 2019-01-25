@@ -153,7 +153,7 @@
                                 minSize: new go.Size(10, 16)
                             },
                             new go.Binding("text", "weight").makeTwoWay())
-                    ),
+                    )
                 )
             ),
             // unlike the normal selection Adornment, this one includes a Button
