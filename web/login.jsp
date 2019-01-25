@@ -10,15 +10,33 @@
 <head>
     <title>登录</title>
 </head>
-<body>
+<style>
+    #Layer1{
+        background-image: url("img/uuu.jpg") ;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-position: 50% 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
 
-    <div>
+<body >
 
-    </div>
+    <div id="Layer1" style="position: absolute; left:0px; top:0px; width:100%; height:100%">
 
-    <div align="center"  margin-top:50px>
+
+<%--<div style="height: 150px">--%>
+
+<div style="height: 150px"></div>
+
+    <div align="center"  margin-top:50px >
         <form  class="form-horizontal" action="${pageContext.request.contextPath}/StudentServlet?method=studentLogin" method="post">
-            <h2>郑州大学教育知识图谱录入系统</h2>
+            <h2>郑州大学</h2>
+            <h2>教育知识图谱录入系统</h2>
             ${msg}<br/>
             <input type="text" name="studentId"  placeholder="学号"> <br/>
             <input type="password" name = "passWord" placeholder="密码">  <br/>
@@ -27,5 +45,7 @@
             <input type="submit" width="100" value="登录" name="submit" border = "0">
         </form>
     </div>
+    </div>
+
 </body>
 </html>
