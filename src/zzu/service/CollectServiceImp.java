@@ -22,12 +22,12 @@ public class CollectServiceImp implements CollectService {
     }
 
     @Override
-    public void clean(Integer loginStudentID) throws SQLException {
+    public void clean(Integer loginStudentID, Integer curriculumId) throws SQLException {
         CollectDao collectDao = new CollectDaoImp();
         //清理知识点表
-        collectDao.cleanNode(loginStudentID);
+        collectDao.cleanNode(loginStudentID, curriculumId);
         //清理知识点关联表
-        collectDao.cleanLine(loginStudentID);
+        collectDao.cleanLine(loginStudentID, curriculumId);
 
     }
 

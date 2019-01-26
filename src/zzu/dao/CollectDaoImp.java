@@ -21,17 +21,17 @@ public class CollectDaoImp implements CollectDao {
     }
 
     @Override
-    public void cleanNode(Integer loginStudentID) throws SQLException {
+    public void cleanNode(Integer loginStudentID, Integer curriculumId) throws SQLException {
         QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
-        String sql = "DELETE FROM kg_knowledgepoint WHERE studentId = ?";
-        queryRunner.update(sql,loginStudentID);
+        String sql = "DELETE FROM kg_knowledgepoint WHERE studentId = ? AND curriculumId = ?";
+        queryRunner.update(sql,loginStudentID, curriculumId);
     }
 
     @Override
-    public void cleanLine(Integer loginStudentID) throws SQLException {
+    public void cleanLine(Integer loginStudentID, Integer curriculumId) throws SQLException {
         QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
-        String sql = "DELETE FROM kg_classinnerlink WHERE studentId = ?";
-        queryRunner.update(sql,loginStudentID);
+        String sql = "DELETE FROM kg_classinnerlink WHERE studentId = ? AND curriculumId = ?";
+        queryRunner.update(sql,loginStudentID, curriculumId);
     }
 
     @Override

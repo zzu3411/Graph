@@ -9,7 +9,7 @@ public interface CollectService  {
 
     void addLine( String nodeA, String nodeB, Double weigh, Integer loginStudentID, Integer curriculumId) throws SQLException;
 
-    void clean(Integer loginStudentID) throws SQLException;
+    void clean(Integer loginStudentID,Integer curriculumId) throws SQLException;
 
     void updateStuCurMemo(Integer loginStudentID, Integer curriculumId ,String memo) throws SQLException;
 

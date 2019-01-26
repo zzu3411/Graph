@@ -40,7 +40,7 @@ public class CollectServlet extends BaseServlet {
 
         //每次提交都删除之前数据重新保存
         CollectService collectService = new CollectServiceImp();
-        collectService.clean(loginStudentID);
+        collectService.clean(loginStudentID, curriculumId);
 
 
         //知识点数据
