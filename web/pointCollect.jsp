@@ -10,63 +10,69 @@
 
 <html>
 <head>
-    <title>采集页面</title>
+    <title>郑州大学--采集页面</title>
     <script src="JS/go.js"></script>
     <script src="JS/jquery-1.12.2.min.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/collect.css" rel="stylesheet"/>
 </head>
-    <body onload="init()">
-
+<body onload="init()">
     <c:if test="${empty loginStudent}">
         <li><a href="${pageContext.request.contextPath}/StudentServlet?method=login">登录</a></li>
     </c:if>
 
     <c:if test="${not empty loginStudent}">
-        欢迎! ${loginStudent.name}
-        <li><a href="${pageContext.request.contextPath}/jsp/order_list.jsp">修改个人信息</a></li>
-        <li><a href="${pageContext.request.contextPath}/StudentServlet?method=logout">退出</a></li>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="Img/zzu_logo.png" class="logo">
+                    <a class="navbar-brand" href="#">郑州大学课程知识点采集</a>
+                </div>
+                <div class="collapse navbar-collapse pull-right" id="example-navbar-collapse">
+                    <ul class="nav navbar-nav pull-right">
+                        <li id="SaveButton" onclick="save()"><a>保存</a></li>
+                        <li onclick = "location.href='${pageContext.request.contextPath}/jsp/order_list.jsp'"><a>修改个人信息</a></li>
+                        <li onclick = "location.href='${pageContext.request.contextPath}/StudentServlet?method=logout'"><a>退出</a></li>
+                        <li ><a>当前用户：${loginStudent.name}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </c:if>
 
 
-        <form class="form-horizontal" action="${pageContext.request.contextPath}/CollectServlet?method=collectData" method="post">
-            <div id="main" style="width: 100%">
-                <div id="left" style="width: 20%; float: left">
-                    <c:forEach items="${StuCur}" var="StuCur" varStatus="id">
-                        <li><a class="chooseCur" onclick='showGraph(${StuCur.ID}, ${StuCur.memo})' <%--href="${pageContext.request.contextPath}/CollectServlet?method=showCurGraph&memo=${StuCur.memo}"--%>>${StuCur.curriculumName}</a></li>
-                    </c:forEach>
-                </div>
-                <div id="right" style="width: 80%; float: right">
-                    <div id="myDiagramDiv" style="border: solid 1px black; width: 80%; height: 800px"></div>
-                    <div>
-                        <button id="SaveButton" onclick="save()">保存</button>
-                        <a onclick="load()">load</a>
-                    </div>
-                    <textarea id="graph" name="graph" style="width:100%; display: none">
-                        ${memo}
-                    </textarea>
-                    <input id="curID" name="curID" style="display: none"/>
-                </div>
-            </div>
+<form class="form-horizontal">
+    <div id="main" style="width: 100%">
+        <div id="left" class="col-md-1">
+            <ul class="nav nav-tabs nav-stacked">
+                <c:forEach items="${StuCur}" var="StuCur" varStatus="id">
+                    <li><a class="chooseCur" onclick='showGraph(${StuCur.ID})'>${StuCur.curriculumName}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
 
-        </form>
+        <div class="alert col-md-11 hide text-center"></div>
+        <div id="right" >
+
+            <div id="myDiagramDiv" class="col-md-11" style="height: 93%"></div>
+        <%--<div>
+                <button class="btn btn-info" id="SaveButton" onclick="save()">保存</button>
+            </div>--%>
+            <textarea id="graph" name="graph" style="width:100%; display: none">
+                ${memo}
+            </textarea>
+
+            <input id="curId" name="curId" style="display: none"/>
+        </div>
+    </div>
+
+</form>
 
 
-    </body>
-
-
+</body>
 <script type="text/javascript">
-    /*$(function () {
-        var url = "/CategoryServlet";
-        var obj = {"method": "findAllCategory"};
-        $.post(url, obj, function (data) {
-            $.each(data, function (i, objs) {
-                var li = "<li><a href='#'>" + objs.cname + " </a></li>";
-                $("#menu").append(li);
-
-                // alert(li);
-            });
-        }, "json");
-    });*/
     function init() {
+
         //if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
         var $ = go.GraphObject.make;  // for conciseness in defining templates
         myDiagram =
@@ -153,7 +159,7 @@
                                 minSize: new go.Size(10, 16)
                             },
                             new go.Binding("text", "weight").makeTwoWay())
-                    )
+                    ),
                 )
             ),
             // unlike the normal selection Adornment, this one includes a Button
@@ -250,16 +256,28 @@
     // Show the diagram's model in JSON format
     function save() {
         document.getElementById("graph").value = myDiagram.model.toJson();
+        let curId = document.getElementById("curId").value;
+        let graph = document.getElementById("graph").value;
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/CollectServlet?method=collectData",
+            data: { curId:curId ,graph:graph},
+            success: function(data) {
+                if(data != null){
+                    $('.alert').html('操作成功').removeClass("hide").addClass('alert-success').show().delay(2500).fadeOut();
+                    myDiagram.model = go.Model.fromJson(data);
+                }else myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
+                    "copiesKey": false,
+                    "nodeDataArray": [  ],
+                    "linkDataArray": [  ]});
+            }
+        });
     }
 
     function load() {
         myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
     }
-    function load() {
-        myDiagram.model = go.Model.fromJson(document.getElementById("graph").value);
-    }
     function showGraph(curId) {
-        //init();
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/CollectServlet?method=findMemo",
@@ -268,15 +286,26 @@
             success: function(data) {
                 if(data != null){
                     myDiagram.model = go.Model.fromJson(data);
-                }else myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
-                    "copiesKey": false,
-                    "nodeDataArray": [  ],
-                    "linkDataArray": [  ]});
+                }else {
+                    myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
+                        "copiesKey": false,
+                        "nodeDataArray": [  ],
+                        "linkDataArray": [  ]});
+
+                    $('.alert').html('暂无该课程的图谱，可在下方空白区域双击鼠标，制作图谱^-^').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+                }
             }
         });
-        document.getElementById("curID").value = curId;
+        document.getElementById("curId").value = curId;
     }
 
+
+    $(".nav-tabs li:first").addClass("active");
+    $(".nav-tabs li:first a").click();
+    $('.nav-tabs li a').click(function () {
+        $('.nav li').removeClass("active");
+        $(this).parent().addClass("active");
+    })
 </script>
 
 </html>

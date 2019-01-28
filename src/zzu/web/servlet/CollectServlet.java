@@ -35,8 +35,8 @@ public class CollectServlet extends BaseServlet {
         Student loginStudent = (Student) request.getSession().getAttribute("loginStudent");
         System.out.println("当前用户session：" + loginStudent.toString());
         Integer loginStudentID = loginStudent.getID();
-        System.out.println(request.getParameter("curID"));
-        Integer curriculumId = Integer.valueOf(request.getParameter("curID"));
+        System.out.println(request.getParameter("curId"));
+        Integer curriculumId = Integer.valueOf(request.getParameter("curId"));
 
         //每次提交都删除之前数据重新保存
         CollectService collectService = new CollectServiceImp();

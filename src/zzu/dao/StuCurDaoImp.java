@@ -15,8 +15,8 @@ public class StuCurDaoImp implements StuCurDao{
 
         QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
 
-        String sql = "SELECT cur.ID,cur.curriculumName,stu.memo FROM kg_studentcurriculum stu LEFT JOIN  kg_curriculum cur ON stu.curriculumId=cur.ID WHERE stu.studentId=? ORDER BY cur.ID ";
-
+        /*String sql = "SELECT cur.ID,cur.curriculumName,stu.memo FROM kg_studentcurriculum stu LEFT JOIN  kg_curriculum cur ON stu.curriculumId=cur.ID WHERE stu.studentId=? ORDER BY cur.ID ";*/
+        String sql = "SELECT * FROM `kg_curriculum` WHERE ID in (SELECT curriculumId FROM kg_studentcurriculum WHERE studentId = ?)";
         return queryRunner.query(sql ,new BeanListHandler<Curriculum>(Curriculum.class),studentId);
     }
 
