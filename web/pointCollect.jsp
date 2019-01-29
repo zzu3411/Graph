@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <img src="img/zzu_logo.png" class="logo">
-                    <a class="navbar-brand" href="#">郑州大学课程知识点采集</a>
+                    <a class="navbar-brand" href="#"> 课程知识图谱数据采集</a>
                 </div>
                 <div class="collapse navbar-collapse pull-right" id="example-navbar-collapse">
                     <ul class="nav navbar-nav pull-right">

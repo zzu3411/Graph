@@ -36,7 +36,7 @@
     <div align="center"  margin-top:50px >
         <form  class="form-horizontal" action="${pageContext.request.contextPath}/StudentServlet?method=studentLogin" method="post">
             <h2>郑州大学</h2>
-            <h2>教育知识图谱录入系统</h2>
+            <h2>课程知识图谱录入系统</h2>
             ${msg}<br/>
             <input type="text" name="studentId"  placeholder="学号"> <br/>
             <input type="password" name = "passWord" placeholder="密码">  <br/>
