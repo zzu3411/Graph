@@ -23,7 +23,7 @@ public class StudentServlet extends BaseServlet {
 
         Integer studentId = Integer.parseInt(request.getParameter("studentId").trim());
         String passWord = request.getParameter("passWord");
-        System.out.println(studentId + "  " + passWord);
+        System.out.println("用户名密码： " + studentId + "  " + passWord);
         StudentService studentService = new StudentServiceImp();
         Student student = studentService.findOneStudent( studentId,  passWord);
         if(student != null){

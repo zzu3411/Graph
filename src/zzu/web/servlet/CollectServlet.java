@@ -46,18 +46,14 @@ public class CollectServlet extends BaseServlet {
         //知识点数据
         request.setCharacterEncoding("utf-8");
         String graph = request.getParameter("graph");
-        String graphStr=new String(graph.trim().getBytes("ISO-8859-1"), "UTF-8");
+//        String graphStr=new String(graph.trim().getBytes("ISO-8859-1"), "UTF-8");
+        String graphStr = graph.trim();
         System.out.println("Graph: " + graphStr);
 
         collectService = new CollectServiceImp();
         collectService.updateStuCurMemo(loginStudentID, curriculumId , graphStr);
 
-        //获取前端传递过来的json 进行处理
-        //String json = request.getParameter("json");
 
-        //测试使用
-        /*String json = StaticData.json;*/
-//        String json = graphStr;
 
         Map<String,Map> test =JsonUtils.jsonResolve(graphStr);
 
