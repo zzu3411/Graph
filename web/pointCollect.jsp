@@ -25,7 +25,7 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <img src="Img/zzu_logo.png" class="logo">
+                    <img src="img/zzu_logo.png" class="logo">
                     <a class="navbar-brand" href="#">郑州大学课程知识点采集</a>
                 </div>
                 <div class="collapse navbar-collapse pull-right" id="example-navbar-collapse">
