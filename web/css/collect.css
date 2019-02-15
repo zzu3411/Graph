@@ -1,5 +1,10 @@
-.logo{
+.logo {
     height: 50px;
     float: left;
     margin-right: 10px;
+}
+
+.diagram {
+    height: 80%;
+    background-color: #f8f8f8
 }
