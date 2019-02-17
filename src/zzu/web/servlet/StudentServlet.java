@@ -13,8 +13,11 @@ import zzu.service.CurriculumServiceImp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class StudentServlet extends BaseServlet {
@@ -46,6 +49,12 @@ public class StudentServlet extends BaseServlet {
 
             CurriculumService curSer = new CurriculumServiceImp();
             List<Curriculum> currList= curSer.findStuCur(studentId);
+
+            //记录登录时间
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            String startDate = df.format(new Date());// new Date()为获取当前系统时间
+            request.getSession().setAttribute("startDate", startDate);
+            System.out.println("setsession startDate: " + startDate);
 
             request.getSession().setAttribute("StuCur", currList);
             request.getSession().setAttribute("loginStudent", student);

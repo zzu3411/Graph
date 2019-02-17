@@ -5,8 +5,10 @@ import zzu.dao.CollectDaoImp;
 import zzu.dao.StuCurDao;
 import zzu.dao.StuCurDaoImp;
 import zzu.domin.Curriculum;
+import zzu.domin.StudentTime;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class CollectServiceImp implements CollectService {
     @Override
@@ -41,5 +43,24 @@ public class CollectServiceImp implements CollectService {
     public Curriculum findMemo(Integer loginStudentID, Integer curriculumId) throws SQLException {
         StuCurDao stuCurDao = new StuCurDaoImp();
         return stuCurDao.findMemo(loginStudentID, curriculumId);
+    }
+
+    @Override
+    public List<StudentTime> findStudentTime(Integer studentID, Integer curriculumID) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        return collectDao.findStudentTime(studentID,curriculumID);
+
+    }
+
+    @Override
+    public void addStudentTime(Integer loginStudentID, Integer curriculumId, String startDate, String savetDate) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        collectDao.addStudentTime(loginStudentID,curriculumId,startDate,savetDate);
+    }
+
+    @Override
+    public void updateStudentTime(Integer ID, String savetDate) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        collectDao.updateStudentTime(ID,savetDate);
     }
 }

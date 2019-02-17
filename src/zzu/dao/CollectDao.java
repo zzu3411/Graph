@@ -1,6 +1,9 @@
 package zzu.dao;
 
+import zzu.domin.StudentTime;
+
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public interface CollectDao {
@@ -14,4 +17,10 @@ public interface CollectDao {
     void cleanLine(Integer loginStudentID, Integer curriculumId) throws SQLException;
 
     void updateStuCurMemo(Integer loginStudentID, Integer curriculumId, String memo) throws SQLException;
+
+    List<StudentTime> findStudentTime(Integer studentID, Integer curriculumID) throws SQLException;
+
+    void addStudentTime(Integer loginStudentID,Integer curriculumId,String startDate,String savetDate) throws SQLException;
+
+    void updateStudentTime(Integer ID, String savetDate) throws SQLException;
 }

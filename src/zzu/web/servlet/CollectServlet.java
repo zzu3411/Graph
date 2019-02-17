@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 import zzu.dao.CollectDaoImp;
 import zzu.domin.Curriculum;
 import zzu.domin.Student;
+import zzu.domin.StudentTime;
 import zzu.service.*;
 import zzu.test.StaticData;
 import zzu.utils.JsonUtils;
@@ -21,9 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @WebServlet(name = "CollectServlet")
 
@@ -65,7 +65,43 @@ public class CollectServlet extends BaseServlet {
         Map<String[],Double> lineMap = test.get("lineMap");
         saveLine(lineMap, loginStudentID, curriculumId);
 
+        String startDate = (String) request.getSession().getAttribute("startDate");
+        System.out.println("getsession startDate: " + startDate);
+
+        saveDuration(startDate, loginStudentID, curriculumId);
+
+
+
         return "/pointCollect.jsp";
+    }
+
+    //记录本次登录学习时间 登录--提交时间
+    private void saveDuration(String startDate, Integer loginStudentID ,Integer curriculumId) throws SQLException {
+        //记录提交时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String savetDate = df.format(new Date());// new Date()为获取当前系统时间
+
+        //查询studnettime表是否有记录
+        CollectService collectService = new CollectServiceImp();
+        List<StudentTime> studentTimes = collectService.findStudentTime(loginStudentID, curriculumId);
+        StudentTime studentTime = null;
+        if (studentTimes.size()>0) {
+            for (StudentTime s : studentTimes) {
+                if (s.getStartTime().equals(startDate)){
+                    studentTime = s;
+                    break;
+                }
+            }
+        }
+        if ( studentTime == null ){
+            //本次登录第一次提交 插入本次记录
+            collectService.addStudentTime(loginStudentID,curriculumId,startDate,savetDate);
+        }else{
+            //修改最后提交时间
+            collectService.updateStudentTime(studentTime.getID(),savetDate);
+        }
+
+        System.out.println("setsession startDate: " + startDate);
     }
 
     public void findMemo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

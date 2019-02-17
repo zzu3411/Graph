@@ -1,9 +1,14 @@
 package zzu.dao;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import zzu.domin.Curriculum;
+import zzu.domin.StudentTime;
 import zzu.utils.JDBCUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class CollectDaoImp implements CollectDao {
     @Override
@@ -40,5 +45,29 @@ public class CollectDaoImp implements CollectDao {
         String sql = "UPDATE kg_studentcurriculum SET memo = ? where studentId=? AND curriculumId=? ";
         queryRunner.update(sql,memo,loginStudentID,curriculumId);
 
+    }
+
+    @Override
+    public List<StudentTime> findStudentTime(Integer studentID, Integer curriculumID) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+//        String sql = "SELECT * FROM kg_studenttime WHERE ID=(  SELECT MAX(ID) FROM kg_studenttime WHERE studentId=? AND curriculumId = ?  )";
+        String sql = "SELECT * FROM kg_studenttime WHERE studentId=? AND curriculumId = ? ";
+        return queryRunner.query(sql, new BeanListHandler<StudentTime>(StudentTime.class) , studentID, curriculumID);
+
+    }
+
+    @Override
+    public void addStudentTime(Integer loginStudentID, Integer curriculumId, String startDate, String savetDate) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+        String sql = "INSERT INTO kg_studenttime (studentId,curriculumId,startTime, endTime) VALUES(?,?,?,?)";
+        queryRunner.update(sql, loginStudentID,curriculumId,  startDate, savetDate);
+
+    }
+
+    @Override
+    public void updateStudentTime(Integer ID, String savetDate) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+        String sql = "UPDATE kg_studenttime SET endTime=? WHERE ID = ?";
+        queryRunner.update(sql,savetDate,ID);
     }
 }
