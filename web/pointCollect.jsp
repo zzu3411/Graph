@@ -76,10 +76,6 @@
 </body>
 <script type="text/javascript">
     function init() {
-
-        var blues = ['#E1F5FE', '#B3E5FC', '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4', '#039BE5', '#0288D1', '#0277BD', '#01579B'];
-
-        //if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
         var $ = go.GraphObject.make;  // for conciseness in defining templates
         myDiagram =
             $(go.Diagram, "myDiagramDiv",  // must name or refer to the DIV HTML element
@@ -88,7 +84,7 @@
                     "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
                     // support double-click in background creating a new node
                     "clickCreatingTool.archetypeNodeData": {
-                        name: "(知识点)",
+                        name: "知识点",
                         concept: "(概述)",
                         weight:"1",
                         color: "#ffbc00",
@@ -111,6 +107,7 @@
         // define the Node template
         myDiagram.nodeTemplate =
             $(go.Node, "Auto",
+                {desiredSize: new go.Size(100,100)},
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
                 $(go.Shape, "Circle",
                     {
@@ -122,78 +119,26 @@
                         portId: "",  // this Shape is the Node's port, not the whole Node
                         fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
                         toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true,
-                        cursor: "pointer"
+                        cursor: "pointer",
+
                     },
                     new go.Binding("fill", "color")
-                    /*new go.Binding("fill", "3", function(dist) {
-                        dist = Math.min(blues.length - 1, dist);
-                        return blues[dist];
-                    })*/
                     ),
 
-                $(go.Panel, "Vertical",
-                    $(go.Panel, "Horizontal",
-                        /*$(go.TextBlock, "知识点: ", textStyle(),
-                            {
-                                row: 1,
-                                column: 10,
-                                font: "9pt utf-8",
-                                name: "name_panel",
-                                //visible:false,
-                            }),*/
-                        $(go.TextBlock, textStyle(),  // the name
-                            {
-                                row: 0, column: 0, columnSpan: 5,
-                                editable: true, isMultiline: false,
-                                minSize: new go.Size(10, 16),
-                            },
-                            new go.Binding("text", "name").makeTwoWay()),
-                        /*$("PanelExpanderButton", "Panels", // name of the object to make visible or invisible
-                            { column: 1, alignment: go.Spot.TopRight }
-                        )*/
-                    ),
-                    /*$(go.Panel,"Vertical",
-                        {
-                            name: "Panels",
-                        },
-                        $(go.Panel, "Horizontal",
-                            {
-                                //visible:false,
-                                name:"concept_panel"
-                            },
-                            $(go.TextBlock, "概述: ", textStyle(),
-                                {
-                                    row: 1,
-                                    column: 10,
-                                    font: "9pt utf-8",
-                                }),
-                            $(go.TextBlock, textStyle(),  // the concept
-                                {
-                                    row: 3, column: 10, columnSpan: 5,
-                                    wrap: go.TextBlock.WrapFit,
-                                    editable: true,  // by default newlines are allowed
-                                    minSize: new go.Size(10, 14),
-                                },
-                                new go.Binding("text", "concept").makeTwoWay())
-                        ),
-                        $(go.Panel, "Horizontal",
-                            {
-                                //visible:false,
-                                name:"weight_panel"
-                            },
-                            $(go.TextBlock, "权重: ", textStyle(),
-                                { row: 1, column: 10, font: "9pt utf-8", }),
-                            $(go.TextBlock, textStyle(),  // the weight
-                                {
-                                    row: 0, column: 0, columnSpan: 5,
-                                    editable: true, isMultiline: false,
-                                    minSize: new go.Size(10, 16)
-                                },
-                                new go.Binding("text", "weight").makeTwoWay())
-                        ),
-                    ),*/
+                $(go.TextBlock, textStyle(),  // the name
+                    {
+                        editable: true,
+                    },
+                    new go.Binding("text", "name").makeTwoWay()),
 
-                ),
+                $(go.TextBlock,   // the weight
+                    {
+                        editable: true,
+                        alignment: go.Spot.Bottom,
+                    },
+                    new go.Binding("text", "weight").makeTwoWay()),
+
+
                 $("TreeExpanderButton",
                     {
                         alignment: go.Spot.BottomRight,
@@ -263,7 +208,7 @@
             var linkdata = {
                 from: model.getKeyForNodeData(fromData),  // or just: fromData.id
                 to: model.getKeyForNodeData(toData),
-                relate: "1"
+                relate: "0"
             };
             // and add the link data to the model
             model.addLinkData(linkdata);
@@ -276,7 +221,7 @@
         }
 
         function textStyle() {
-            return { font: "12pt utf-8", stroke: "black", margin: 2 };
+            return { font: "12pt utf-8", stroke: "black", };
         }
 
         // replace the default Link template in the linkTemplateMap
@@ -300,16 +245,13 @@
                                 {0: "rgb(255, 255, 255)", 0.3: "rgb(255, 255, 255)", 1: "rgba(255, 255, 255, 0)"}),
                             stroke: null
                         }),
-                   /* $(go.TextBlock, "相关度: ", textStyle(),
-                        { row: 1, column: 10 }),*/
-                    $(go.TextBlock, "1",  // the label text
+                    $(go.TextBlock, "0",  // the label text
                         {
                             textAlign: "center",
-                            font: "9pt helvetica, arial, sans-serif",
+                            font: "15pt",
                             margin: 4,
-                            editable: true  // enable in-place editing
+                            editable: true
                         },
-                        // editing the text automatically updates the model data
                         new go.Binding("text", "relate").makeTwoWay())
                 )
             );
