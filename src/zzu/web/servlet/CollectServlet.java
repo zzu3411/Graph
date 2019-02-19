@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.PublicKey;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,6 +29,7 @@ import java.util.*;
 @WebServlet(name = "CollectServlet")
 
 public class CollectServlet extends BaseServlet {
+
 
     //解析前端返回的json 存储知识点与知识点间的联系
     public String collectData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -50,8 +52,10 @@ public class CollectServlet extends BaseServlet {
         String graphStr = graph.trim();
         System.out.println("Graph: " + graphStr);
 
-        collectService = new CollectServiceImp();
+//        collectService = new CollectServiceImp();
         collectService.updateStuCurMemo(loginStudentID, curriculumId , graphStr);
+
+
 
 
 

@@ -72,8 +72,14 @@ public class JsonUtils {
             Integer j = Integer.parseInt (  (map1.get("to")).toString().trim()  );
             fromTo[1] =  (String)  nodeMap.get(j).get("nodeName") ;
 //            Integer weight = Integer.parseInt (  (map1.get("text")).toString().trim()  )  ;
+            Double relate = null;
+            try {
+                relate = Double.parseDouble ( ( map1.get("relate")).toString().trim() );
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("异常节点1：" + fromTo[0] + "  异常节点2：" + fromTo[0]);
 
-            Double relate = Double.parseDouble ( ( map1.get("relate")).toString().trim() );
+            }
             lineMap.put(fromTo, relate);
         }
 
