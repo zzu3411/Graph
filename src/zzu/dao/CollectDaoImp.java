@@ -4,6 +4,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import zzu.domin.Curriculum;
+import zzu.domin.StudentCurriculum;
 import zzu.domin.StudentTime;
 import zzu.utils.JDBCUtils;
 
@@ -69,5 +70,20 @@ public class CollectDaoImp implements CollectDao {
         QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
         String sql = "UPDATE kg_studenttime SET endTime=? WHERE ID = ?";
         queryRunner.update(sql,savetDate,ID);
+    }
+
+    @Override
+    public StudentCurriculum findEditTime(Integer loginStudentID, Integer curriculumId) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+        String sql = "SELECT * FROM kg_studentcurriculum WHERE studentId = ? AND curriculumId = ?";
+        return queryRunner.query(sql, new BeanHandler<StudentCurriculum>(StudentCurriculum.class),loginStudentID, curriculumId);
+
+    }
+
+    @Override
+    public void updateEditTime(Integer loginStudentID, Integer curriculumId, Integer editTime) throws SQLException {
+        QueryRunner queryRunner = new QueryRunner(JDBCUtils.getDataSource());
+        String sql = "update kg_studentcurriculum  set editTime = ? WHERE studentId = ? AND curriculumId = ?";
+        queryRunner.update(sql, editTime, loginStudentID, curriculumId);
     }
 }

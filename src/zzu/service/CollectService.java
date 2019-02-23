@@ -24,5 +24,9 @@ public interface CollectService  {
 
     void updateStudentTime(Integer ID, String savetDate) throws SQLException;
 
+    int findEditTime(Integer loginStudentID,Integer  curriculumId) throws SQLException;
+
+    void updateEditTime(Integer loginStudentID,Integer curriculumId,Integer editTime) throws SQLException;
+
 
 }

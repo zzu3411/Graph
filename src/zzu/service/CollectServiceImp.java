@@ -5,6 +5,7 @@ import zzu.dao.CollectDaoImp;
 import zzu.dao.StuCurDao;
 import zzu.dao.StuCurDaoImp;
 import zzu.domin.Curriculum;
+import zzu.domin.StudentCurriculum;
 import zzu.domin.StudentTime;
 
 import java.sql.SQLException;
@@ -62,5 +63,18 @@ public class CollectServiceImp implements CollectService {
     public void updateStudentTime(Integer ID, String savetDate) throws SQLException {
         CollectDao collectDao = new CollectDaoImp();
         collectDao.updateStudentTime(ID,savetDate);
+    }
+
+    @Override
+    public int findEditTime(Integer loginStudentID, Integer curriculumId) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        StudentCurriculum studentCurriculum = collectDao.findEditTime(loginStudentID, curriculumId);
+        return studentCurriculum.getEditTime();
+    }
+
+    @Override
+    public void updateEditTime(Integer loginStudentID, Integer curriculumId, Integer editTime) throws SQLException {
+        CollectDao collectDao = new CollectDaoImp();
+        collectDao.updateEditTime(loginStudentID,curriculumId,editTime);
     }
 }

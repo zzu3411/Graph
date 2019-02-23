@@ -73,6 +73,7 @@ public class CollectServlet extends BaseServlet {
         System.out.println("getsession startDate: " + startDate);
 
         saveDuration(startDate, loginStudentID, curriculumId);
+        addEditTime(loginStudentID, curriculumId);
 
 
 
@@ -106,6 +107,14 @@ public class CollectServlet extends BaseServlet {
         }
 
         System.out.println("setsession startDate: " + startDate);
+    }
+
+    //记录课程提交次数
+    private void addEditTime(Integer loginStudentID,Integer curriculumId) throws SQLException {
+        CollectService collectService = new CollectServiceImp();
+        int  editTime = collectService.findEditTime(loginStudentID,curriculumId) + 1;
+        collectService.updateEditTime(loginStudentID,curriculumId,editTime);
+
     }
 
     public void findMemo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
