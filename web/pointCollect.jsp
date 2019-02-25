@@ -62,7 +62,6 @@
                 <button class="btn btn-info" id="SaveButton" onclick="save()">保存</button>
             </div>--%>
             <textarea id="graph" name="graph" style="width:100%; display: none">
-                ${memo}
                 {}
             </textarea>
 
@@ -107,7 +106,10 @@
         // define the Node template
         myDiagram.nodeTemplate =
             $(go.Node, "Auto",
-                {desiredSize: new go.Size(100,100)},
+                {
+                    desiredSize: new go.Size(100,100),
+                    toolTip: $("ToolTip", $(go.TextBlock,"权重的取值范围:[0,1]")),
+                },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
                 $(go.Shape, "Circle",
                     {
@@ -135,6 +137,7 @@
                     {
                         editable: true,
                         alignment: go.Spot.Bottom,
+                        toolTip: $("ToolTip", $(go.TextBlock,"取值范围:[0,1]")),
                     },
                     new go.Binding("text", "weight").makeTwoWay()),
 
@@ -230,7 +233,8 @@
                 {
                     adjusting: go.Link.Stretch,
                     reshapable: true, relinkableFrom: true, relinkableTo: true,
-                    toShortLength: 3
+                    toShortLength: 3,
+                    toolTip: $("ToolTip", $(go.TextBlock,"取值范围:[0,1]")),
                 },
                 new go.Binding("points").makeTwoWay(),
                 new go.Binding("curviness"),
@@ -281,20 +285,39 @@
         document.getElementById("graph").value = myDiagram.model.toJson();
         let curId = document.getElementById("curId").value;
         let graph = document.getElementById("graph").value;
-        $.ajax({
-            type: "POST",
-            url: "${pageContext.request.contextPath}/CollectServlet?method=collectData",
-            data: { curId:curId ,graph:graph},
-            success: function(data) {
-                if(data != null){
-                    $('.alert').html('操作成功').removeClass("hide").addClass('alert-success').show().delay(2500).fadeOut();
-                    myDiagram.model = go.Model.fromJson(data);
-                }else myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
-                    "copiesKey": false,
-                    "nodeDataArray": [  ],
-                    "linkDataArray": [  ]});
-            }
-        });
+        //提交数据前 判断
+        //节点判断
+        if (graph.indexOf("知识点") != -1) {
+            $('.alert').html('存在未修改名称的知识点，请修改 -。-').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+            return;
+        }
+        //判断 是否存在自连接、孤立节点、关联值
+        keys = [];
+        validateNode = true;
+        doAjax = true;
+        graphJson = $.parseJSON( graph );
+
+        validateLink();
+        if (validateNode) {
+            soleNode();
+        }
+
+        if (doAjax && validateNode) {
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/CollectServlet?method=collectData",
+                data: { curId:curId ,graph:graph},
+                success: function(data) {
+                    if(data != null){
+                        $('.alert').html('操作成功').removeClass("hide").addClass('alert-success').show().delay(2500).fadeOut();
+                        myDiagram.model = go.Model.fromJson(data);
+                    }else myDiagram.model = go.Model.fromJson({ "class": "GraphLinksModel",
+                        "copiesKey": false,
+                        "nodeDataArray": [  ],
+                        "linkDataArray": [  ]});
+                }
+            });
+        }
     }
 
     function load() {
@@ -307,7 +330,6 @@
             data: { curId:curId },
             dataType:"json",
             success: function(data) {
-                console.log(data)
                 if(data != null && data.nodeDataArray.length){
                     myDiagram.model = go.Model.fromJson(data);
                 }else {
@@ -322,7 +344,40 @@
         });
         document.getElementById("curId").value = curId;
     }
+    
+    function validateLink() {
+        link = graphJson.linkDataArray;
+        for (var i=0 ; i < link.length ; i++) {
+            if (parseInt(link[i].relate) < 0 || parseInt(link[i].relate) > 1) {
+                $('.alert').html('"关联值"的范围为[0,1]，请修改 -。-').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+                validateNode = false;
+                break;
+            }
+            if (link[i].from == link[i].to) {
+                $('.alert').html('存在未与其他节点相连的知识点，请修改 -。-').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+                validateNode = false;
+                break;
+            }
+            keys.push(link[i].from);
+            keys.push(link[i].to);
+        }
+    }
 
+    function soleNode(){
+        node = graphJson.nodeDataArray;
+        for (var i=0 ; i < node.length ; i++) {
+            if (parseInt(node[i].weight) < 0 || parseInt(node[i].weight) > 1) {
+                $('.alert').html('"权重"的范围为[0,1]，请修改 -。-').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+                doAjax = false;
+                break;
+            }
+            if (keys.indexOf(node[i].key) == -1) {
+                $('.alert').html('图中存在未与其他节点相连的知识点，请修改 -。-').removeClass("hide").addClass('alert-danger').show().delay(2500).fadeOut();
+                doAjax = false;
+                break;
+            }
+        }
+    }
 
     $(".nav-tabs li:first").addClass("active");
     $(".nav-tabs li:first a").click();
