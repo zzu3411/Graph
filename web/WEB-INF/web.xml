@@ -34,6 +34,15 @@
         <url-pattern>/StudentServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ShowResultServlet</servlet-name>
+        <servlet-class>zzu.web.servlet.ShowResultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowResultServlet</servlet-name>
+        <url-pattern>/ShowResultServlet</url-pattern>
+    </servlet-mapping>
+
 
 <!--    <filter>
         <filter-name>AutoLoginFilter</filter-name>
