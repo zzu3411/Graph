@@ -2,26 +2,26 @@ package zzu.domin;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
-public class StudentCurriculum {
+public class knowledgePoint {
     private Integer ID;
     private Integer studentId;
     private Integer curriculumId;
-    private Integer classNo;
-    private Integer editTime;
-    private Integer grade;
+    private Double knowledgePointLinkWeight;
+    private String knowledgePointName;
+    private String knowledgePointConcept;
     private Integer flag;
     private String memo;
     private Integer valid;
 
     @Override
     public String toString() {
-        return "StudentCurriculum{" +
+        return "knowledgePoint{" +
                 "ID=" + ID +
                 ", studentId=" + studentId +
                 ", curriculumId=" + curriculumId +
-                ", classNo=" + classNo +
-                ", editTime=" + editTime +
-                ", grade=" + grade +
+                ", knowledgePointLinkWeight=" + knowledgePointLinkWeight +
+                ", knowledgePointName='" + knowledgePointName + '\'' +
+                ", knowledgePointConcept='" + knowledgePointConcept + '\'' +
                 ", flag=" + flag +
                 ", memo='" + memo + '\'' +
                 ", valid=" + valid +
@@ -52,28 +52,28 @@ public class StudentCurriculum {
         this.curriculumId = curriculumId;
     }
 
-    public Integer getClassNo() {
-        return classNo;
+    public Double getKnowledgePointLinkWeight() {
+        return knowledgePointLinkWeight;
     }
 
-    public void setClassNo(Integer classNo) {
-        this.classNo = classNo;
+    public void setKnowledgePointLinkWeight(Double knowledgePointLinkWeight) {
+        this.knowledgePointLinkWeight = knowledgePointLinkWeight;
     }
 
-    public Integer getEditTime() {
-        return editTime;
+    public String getKnowledgePointName() {
+        return knowledgePointName;
     }
 
-    public void setEditTime(Integer editTime) {
-        this.editTime = editTime;
+    public void setKnowledgePointName(String knowledgePointName) {
+        this.knowledgePointName = knowledgePointName;
     }
 
-    public Integer getGrade() {
-        return grade;
+    public String getKnowledgePointConcept() {
+        return knowledgePointConcept;
     }
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public void setKnowledgePointConcept(String knowledgePointConcept) {
+        this.knowledgePointConcept = knowledgePointConcept;
     }
 
     public Integer getFlag() {

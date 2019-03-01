@@ -2,26 +2,26 @@ package zzu.domin;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
-public class StudentCurriculum {
+public class ClassInnerLink {
     private Integer ID;
     private Integer studentId;
+    private String knowledgePointA;
+    private String knowledgePointB;
+    private Double knowledgeLinkWeight;
     private Integer curriculumId;
-    private Integer classNo;
-    private Integer editTime;
-    private Integer grade;
     private Integer flag;
     private String memo;
     private Integer valid;
 
     @Override
     public String toString() {
-        return "StudentCurriculum{" +
+        return "ClassInnerLink{" +
                 "ID=" + ID +
                 ", studentId=" + studentId +
+                ", knowledgePointA='" + knowledgePointA + '\'' +
+                ", knowledgePointB='" + knowledgePointB + '\'' +
+                ", knowledgeLinkWeight=" + knowledgeLinkWeight +
                 ", curriculumId=" + curriculumId +
-                ", classNo=" + classNo +
-                ", editTime=" + editTime +
-                ", grade=" + grade +
                 ", flag=" + flag +
                 ", memo='" + memo + '\'' +
                 ", valid=" + valid +
@@ -44,36 +44,36 @@ public class StudentCurriculum {
         this.studentId = studentId;
     }
 
+    public String getKnowledgePointA() {
+        return knowledgePointA;
+    }
+
+    public void setKnowledgePointA(String knowledgePointA) {
+        this.knowledgePointA = knowledgePointA;
+    }
+
+    public String getKnowledgePointB() {
+        return knowledgePointB;
+    }
+
+    public void setKnowledgePointB(String knowledgePointB) {
+        this.knowledgePointB = knowledgePointB;
+    }
+
+    public Double getKnowledgeLinkWeight() {
+        return knowledgeLinkWeight;
+    }
+
+    public void setKnowledgeLinkWeight(Double knowledgeLinkWeight) {
+        this.knowledgeLinkWeight = knowledgeLinkWeight;
+    }
+
     public Integer getCurriculumId() {
         return curriculumId;
     }
 
     public void setCurriculumId(Integer curriculumId) {
         this.curriculumId = curriculumId;
-    }
-
-    public Integer getClassNo() {
-        return classNo;
-    }
-
-    public void setClassNo(Integer classNo) {
-        this.classNo = classNo;
-    }
-
-    public Integer getEditTime() {
-        return editTime;
-    }
-
-    public void setEditTime(Integer editTime) {
-        this.editTime = editTime;
-    }
-
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
     }
 
     public Integer getFlag() {

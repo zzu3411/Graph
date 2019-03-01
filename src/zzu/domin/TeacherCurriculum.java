@@ -2,26 +2,22 @@ package zzu.domin;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
-public class StudentCurriculum {
+public class TeacherCurriculum {
     private Integer ID;
-    private Integer studentId;
+    private Integer teacherId;
     private Integer curriculumId;
     private Integer classNo;
-    private Integer editTime;
-    private Integer grade;
     private Integer flag;
-    private String memo;
+    private String  memo;
     private Integer valid;
 
     @Override
     public String toString() {
-        return "StudentCurriculum{" +
+        return "TeacherCurriculum{" +
                 "ID=" + ID +
-                ", studentId=" + studentId +
+                ", teacherId=" + teacherId +
                 ", curriculumId=" + curriculumId +
                 ", classNo=" + classNo +
-                ", editTime=" + editTime +
-                ", grade=" + grade +
                 ", flag=" + flag +
                 ", memo='" + memo + '\'' +
                 ", valid=" + valid +
@@ -36,12 +32,12 @@ public class StudentCurriculum {
         this.ID = ID;
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public Integer getTeacherId() {
+        return teacherId;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 
     public Integer getCurriculumId() {
@@ -58,22 +54,6 @@ public class StudentCurriculum {
 
     public void setClassNo(Integer classNo) {
         this.classNo = classNo;
-    }
-
-    public Integer getEditTime() {
-        return editTime;
-    }
-
-    public void setEditTime(Integer editTime) {
-        this.editTime = editTime;
-    }
-
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
     }
 
     public Integer getFlag() {
