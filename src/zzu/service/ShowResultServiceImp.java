@@ -96,10 +96,6 @@ public class ShowResultServiceImp implements ShowResultService {
     @Override
     public Map findLinksPoints(Integer studentId, Integer curriculumId) throws SQLException {
 
-
-
-        Map<String,String> data2 = new HashMap<>();
-
         List< Map<String,String> > links = new ArrayList();
         //查询links
         ShowResultDao showResultDao = new ShowResultDaoImp();

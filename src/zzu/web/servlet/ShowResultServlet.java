@@ -19,19 +19,7 @@ import java.util.*;
 @WebServlet(name = "ShowResultServlet")
 public class ShowResultServlet extends BaseServlet {
 
-    //显示教师所教课程与班级
-    public void showClass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
-        Integer curriculumId = 1;
-        Integer classNo = 1;
-        List<Object> res = new ArrayList<>();
-        ShowResultService resultService = new ShowResultServiceImp();
-        res = resultService.showTimesDuration(curriculumId, classNo);
-        for (Object r:res){
-            System.out.println(r.toString());
-        }
-        System.out.println("JSON: " + JSONArray.fromObject(res).toString());
-    }
 
 
     //查询所选班级全部同学的登录次数，提交次数，总登录时长

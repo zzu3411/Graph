@@ -28,7 +28,7 @@ public class AutoLoginFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 
 		String servletPath = request.getServletPath();
-		if(servletPath.startsWith("/StudentServlet")){
+		if(servletPath.startsWith("/LoginServlet")){
 			String method = request.getParameter("method");
 			if("login".equals(method)){
 				chain.doFilter(request, response);
