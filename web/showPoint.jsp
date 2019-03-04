@@ -76,43 +76,45 @@
     <div id="jquery-accordion-menu" class="jquery-accordion-menu red">
         <div class="jquery-accordion-menu-header" id="form"></div>
         <ul id="demo-list">
-
-            <li class="active"><a href="#"><i class="fa fa-home"></i>Home </a></li>
-            <li><a href="#"><i class="fa fa-glass"></i>Events </a></li>
-            <li><a href="#"><i class="fa fa-file-image-o"></i>Gallery </a><span class="jquery-accordion-menu-label">
-				12 </span></li>
-            <li><a href="#"><i class="fa fa-cog"></i>Services </a>
+            <%--<li class="active"><a href="#"><i class="fa fa-home"></i>Home </a></li>--%>
+            <li><a href="#"><i class="fa fa-glass"></i>C语言程序设计 </a></li>
+            <li><a href="#"><i class="fa fa-glass"></i>计算机专业导论 </a></li>
+           <%-- <li><a href="#"><i class="fa fa-file-image-o"></i>计算机专业导论 </a><span class="jquery-accordion-menu-label">
+				12 </span></li>--%>
+            <li><a href="#"><i class="fa fa-cog"></i>数据结构 </a>
                 <ul class="submenu">
-                    <li><a href="#">Web Design </a></li>
-                    <li><a href="#">Hosting </a></li>
-                    <li><a href="#">Design </a>
+                    <li><a href="#">软件1班 </a></li>
+                    <li><a href="#">软件2班 </a></li>
+                    <li><a href="#">软件3班 </a>
                         <ul class="submenu">
-                            <li><a href="#">Graphics </a></li>
-                            <li><a href="#">Vectors </a></li>
-                            <li><a href="#">Photoshop </a></li>
-                            <li><a href="#">Fonts </a></li>
+                            <li><a href="#">张一 </a></li>
+                            <li><a href="#">王鹏 </a></li>
+                            <li><a href="#">王梦丽 </a></li>
+                            <li><a href="#">杨婉 </a></li>
+                            <li><a href="#">李想 </a></li>
+                            <li><a href="#">刘梦婉 </a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Consulting </a></li>
+                    <%--<li><a href="#">Consulting </a></li>--%>
                 </ul>
             </li>
-            <li><a href="#"><i class="fa fa-home"></i>系统管理 </a></li>
-            <li><a href="#"><i class="fa fa-suitcase"></i>Portfolio </a>
-                <ul class="submenu">
+            <li><a href="#"><i class="fa fa-home"></i>C#程序设计 </a></li>
+            <li><a href="#"><i class="fa fa-suitcase"></i>计算机组成原理 </a>
+                <%--<ul class="submenu">
                     <li><a href="#">Web Design </a></li>
                     <li><a href="#">Graphics </a><span class="jquery-accordion-menu-label">10 </span>
                     </li>
                     <li><a href="#">Photoshop </a></li>
                     <li><a href="#">Programming </a></li>
-                </ul>
+                </ul>--%>
             </li>
-            <li><a href="#"><i class="fa fa-user"></i>About </a></li>
-            <li><a href="#"><i class="fa fa-envelope"></i>Contact </a></li>
+            <li><a href="#"><i class="fa fa-user"></i>软件工程 </a></li>
+            <li><a href="#"><i class="fa fa-envelope"></i>操作系统 </a></li>
 
         </ul>
-        <div class="jquery-accordion-menu-footer">
+        <%--<div class="jquery-accordion-menu-footer">
             Footer
-        </div>
+        </div>--%>
     </div>
 </div>
 <div id="chart1" style="width: 85%;height: 900px;top: 15%;left: 15%;"></div>
@@ -124,12 +126,19 @@
     var	option = {
         backgroundColor: '#ccc',	// 背景颜色
         title: {                    // 图表标题
-            text: "收入支出分析",           // 标题文本
+            text: "杨婉",
+            subtext: '学习时长：2.45 h\n登录次数：5 \n提交次数：3',
+            /*subtext: '登录次数：5 ',
+            subtext: '提交次数：3',*/
             left : '3%',                    // 标题距离左侧边距
             top : '3%',                     // 标题距顶部边距
             textStyle : {                       // 标题样式
                 color : '#000',                     // 标题字体颜色
                 fontSize : '30',                    // 标题字体大小
+            },
+            subtextStyle: {
+                color : '#000',                     // 标题字体颜色
+                fontSize : '15',
             }
         },
         tooltip: {                  // 提示框的配置
@@ -175,7 +184,8 @@
                     show: true,                 // 是否显示标签
                     position: "inside",         // 标签位置:'top''left''right''bottom''inside''insideLeft''insideRight''insideTop''insideBottom''insideTopLeft''insideBottomLeft''insideTopRight''insideBottomRight'
                     textStyle: {                // 文本样式
-                        fontSize: 16
+                        fontSize: 16,
+                        color: "#212121"
                     },
                 }
             },
@@ -190,28 +200,90 @@
                     }
                 }
             },
-            data: [{ "name":"知识点1",
-                "concept":"概念",
+            data: [{ "name":"数据结构",
+                "concept":"相互之间存在一种或多种特定关系的数据元素的集合",
                 "weight":"1",
                 symbolSize: [80, 80],
                 itemStyle: {
-                    color: '#00ff00'
+                    color: '#ff8080'
                 },
             }, {
-                "name":"知识点2",
-                "concept":"概念",
-                "weight":"1",
+                "name":"排序",
+                "concept":"将线性表中的元素按关键字从小到大（或从大到小）的顺序重新排列的过程",
+                "weight":"0.8",
                 symbolSize: [80, 80],
                 itemStyle: {
-                    color: '#00ff00'
+                    color: '#80ff80'
                 },
-            }],
+            }, {
+                "name":"数据",
+                "concept":"数据的基本单位（或从大到小）的顺序重新排列的过程",
+                "weight":"0.9",
+                symbolSize: [80, 80],
+                itemStyle: {
+                    color: '#80ff80'
+                },
+            }, {
+                "name":"图",
+                "concept":"由顶点集合(Vertex)及顶点间的关系集合组成的一种数据结构",
+                "weight":"0.8",
+                symbolSize: [80, 80],
+                itemStyle: {
+                    color: '#80ff80'
+                },
+            }, {
+                "name":"串",
+                "concept":"由零个或多个宇符组成的有限序列",
+                "weight":"0.3",
+                symbolSize: [80, 80],
+                itemStyle: {
+                    color: '#80ff80'
+                },
+            }, {
+                "name":"外部排序",
+                "concept":"排序期间文件的全部记录不能同时存放在计算机的内存里，要借助计算机的外存才能完成排序",
+                "weight":"0.5",
+                symbolSize: [80, 80],
+                itemStyle: {
+                    color: '#80ffff'
+                },
+            }, {
+                "name":"内部排序",
+                "concept":"对内存中的记录进行排序",
+                "weight":"0.9",
+                symbolSize: [80, 80],
+                itemStyle: {
+                    color: '#80ffff'
+                },
+            }
+            ],
 
             links: [{
-                target: "知识点1",
-                source: "知识点2",
-                relate: "1"
-            }]
+                target: "外部排序",
+                source: "排序",
+                relate: "0.4"
+            },{
+                target: "内部排序",
+                source: "排序",
+                relate: "0.8"
+            },{
+                target: "排序",
+                source: "数据结构",
+                relate: "0.8"
+            },{
+                target: "图",
+                source: "数据结构",
+                relate: "0.8"
+            },{
+                target: "串",
+                source: "数据结构",
+                relate: "0.1"
+            },{
+                target: "数据",
+                source: "数据结构",
+                relate: "0.9"
+            },
+            ]
         }],
 
         animationEasingUpdate: "quinticInOut",          // 数据更新动画的缓动效果。[ default: cubicOut ]    "quinticInOut"
